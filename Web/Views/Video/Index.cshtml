@@ -1,0 +1,34 @@
+﻿@model List<Domain.Entity.Video>
+@{
+    ViewData["Title"] = "Video List";
+}
+
+<div class="container mt-5">
+    <h2>Video List</h2>
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>File Name</th>
+                <th>Status</th>
+                <th>Uploaded At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var video in Model)
+            {
+                <tr>
+                    <td>@video.Id</td>
+                    <td>@video.FileName</td>
+                    <td><span class="badge bg-secondary">@video.Status</span></td>
+                    <td>@video.UploadedAt.ToString("g")</td>
+                    <td>
+                        <a asp-controller="Video" asp-action="Details" asp-route-id="@video.Id" class="btn btn-sm btn-info">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

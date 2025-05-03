@@ -1,0 +1,17 @@
+﻿@page
+@model Web.Views.TextContent.RejectModel
+
+<h2>Reject Video</h2>
+
+<form method="post">
+    <div>
+        <label>Video ID</label>
+        <input asp-for="Command.VideoId" />
+    </div>
+    <button type="submit">Reject</button>
+</form>
+
+@if (Model.ResultMessage != null)
+{
+    <p>@Model.ResultMessage</p>
+}

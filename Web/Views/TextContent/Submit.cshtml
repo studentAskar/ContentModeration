@@ -1,0 +1,21 @@
+﻿@page
+@model Web.Views.TextContent.SubmitModel
+
+<h2>Submit Content</h2>
+
+<form method="post">
+    <div>
+        <label>Type</label>
+        <input asp-for="Command.Type" />
+    </div>
+    <div>
+        <label>Path or Text</label>
+        <input asp-for="Command.PathOrText" />
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+@if (Model.ResultMessage != null)
+{
+    <p>@Model.ResultMessage</p>
+}
