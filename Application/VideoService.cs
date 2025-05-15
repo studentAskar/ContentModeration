@@ -9,8 +9,10 @@ namespace Application
     {
         private readonly IVideoRepository _videoRepository;
         private readonly string _storagePath;
+        private readonly IRabbitMqPublisher _publisher;
 
-        public VideoService(IVideoRepository videoRepository, IConfiguration configuration)
+
+        public VideoService(IVideoRepository videoRepository, IConfiguration configuration, IRabbitMqPublisher publisher)
         {
             _videoRepository = videoRepository;
             _storagePath = configuration["VideoStoragePath"] ?? "wwwroot/videos";
@@ -19,6 +21,7 @@ namespace Application
             {
                 Directory.CreateDirectory(_storagePath);
             }
+            _publisher = publisher;
         }
 
         public async Task<Video> UploadVideoAsync(IFormFile videoFile)
@@ -35,11 +38,16 @@ namespace Application
             {
                 FileName = fileName,
                 FilePath = filePath,
-                Status = ContentStatus.Pending,
+                Status = (int)ContentStatus.Pending,
                 UploadedAt = DateTime.UtcNow
             };
 
             await _videoRepository.SaveAsync(video);
+            _publisher.Publish(new VideoUploadedMessage
+            {
+                VideoId = video.Id,
+                FilePath = video.FilePath
+            });
             return video;
         }
 

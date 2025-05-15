@@ -20,3 +20,28 @@
         <div class="alert alert-info mt-3">@TempData["Message"]</div>
     }
 </div>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/queuehub")
+            .build();
+
+        connection.on("message", function (msg) {
+            console.log("📨 SignalR message received:", msg);
+
+            // Можно показать всплывающее сообщение или обновить UI
+            const alert = document.createElement("div");
+            alert.className = "alert alert-success mt-3";
+            alert.innerText = msg;
+            document.querySelector(".container").appendChild(alert);
+        });
+
+        connection.start().then(function () {
+            console.log("✅ SignalR connected");
+        }).catch(function (err) {
+            return console.error("❌ SignalR error:", err.toString());
+        });
+    </script>
+}

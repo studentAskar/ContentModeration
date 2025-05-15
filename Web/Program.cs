@@ -1,6 +1,7 @@
 using Application;
 using Domain.Interfaces;
 using Infrastructure;
+using Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddScoped<IVideoService, VideoService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 builder.Services.AddMemoryCache();
 var app = builder.Build();
 
@@ -21,7 +23,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
+app.MapHub<QueueHub>("/queuehub");
 
 // Настройка доступа к видеофайлам
 var storagePath = Path.Combine(builder.Environment.WebRootPath, "videos");

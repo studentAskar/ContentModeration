@@ -1,7 +1,6 @@
 ﻿using Domain.Entity;
 using Domain.Interfaces;
 using KDS.Primitives.FluentResult;
-using Microsoft.AspNet.SignalR.Client;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

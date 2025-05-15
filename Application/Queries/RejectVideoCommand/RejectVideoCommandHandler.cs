@@ -13,7 +13,7 @@ public class RejectVideoCommandHandler(IVideoRepository _videoRepository) : IReq
         var video = await _videoRepository.GetByIdAsync(request.VideoId);
         if (video != null)
         {
-            video.Status = ContentStatus.Rejected;
+            video.Status = (int)ContentStatus.Rejected;
             await _videoRepository.SaveAsync(video);
         }
 

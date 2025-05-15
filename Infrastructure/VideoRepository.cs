@@ -1,10 +1,11 @@
-﻿using Domain.Entity;
+﻿using Domain;
+using Domain.Entity;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
 
-public class VideoRepository(ContentDbContext _dbContext) : IVideoRepository
+public class VideoRepository(QueueDbContext _dbContext) : IVideoRepository
 {
     
 
@@ -15,7 +16,7 @@ public class VideoRepository(ContentDbContext _dbContext) : IVideoRepository
 
     public async Task<List<Video>> GetVideosByStatusAsync(ContentStatus status)
     {
-        return await _dbContext.Videos.Where(v => v.Status == status).ToListAsync();
+        return await _dbContext.Videos.Where(v => v.Status == (int)status).ToListAsync();
     }
     public async Task<List<Video>> GetAllVideosAsync()
     {

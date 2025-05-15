@@ -32,7 +32,7 @@ namespace Web.Controllers
                 }
 
                 var video = await _videoService.UploadVideoAsync(videoFile);
-                return RedirectToAction("Details", new { id = video.Id });
+                return View();
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-            return View(video);
+            return View();
         }
 
         [HttpGet]

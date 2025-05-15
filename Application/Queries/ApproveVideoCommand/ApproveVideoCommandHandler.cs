@@ -13,7 +13,7 @@ public class ApproveVideoCommandHandler(IVideoRepository _videoRepository) : IRe
         var video = await _videoRepository.GetByIdAsync(request.VideoId);
         if (video != null)
         {
-            video.Status = ContentStatus.Approved;
+            video.Status = (int)ContentStatus.Approved;
             await _videoRepository.SaveAsync(video);
         }
 
